@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MUTABAZI Philemon | Computer Science Portfolio</title>
+<meta name="description" content="Portfolio of MUTABAZI Philemon, a Year 4 Computer Science student working on Linux, networking and web development.">
+<style>
+:root{
+  --ink:#14213d; --ink-soft:#4a5672; --paper:#f6f7fb; --card:#ffffff;
+  --line:#dde3ee; --blue:#2f5bea; --blue-dark:#2347c0; --mint:#1fa37a; --night:#0e1730;
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Consolas,"Liberation Mono",monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{font-family:var(--sans);color:var(--ink);background:var(--paper);line-height:1.65;font-size:1.0625rem;-webkit-font-smoothing:antialiased}
+img,svg{max-width:100%}
+a{color:var(--blue)}
+a:focus-visible,button:focus-visible{outline:3px solid var(--blue);outline-offset:3px;border-radius:4px}
+.wrap{width:min(1080px,100% - 2.5rem);margin-inline:auto}
+section{padding:5rem 0}
+h1,h2,h3{font-family:var(--serif);line-height:1.15;letter-spacing:-.01em}
+h2{font-size:clamp(1.8rem,4vw,2.5rem);margin-bottom:.6rem}
+.lede{color:var(--ink-soft);max-width:62ch;margin-bottom:2.5rem}
+
+/* Header */
+header{position:sticky;top:0;z-index:10;background:rgba(246,247,251,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;padding:.8rem 0}
+.brand{font-family:var(--serif);font-weight:700;font-size:1.2rem;color:var(--ink);text-decoration:none}
+nav ul{display:flex;gap:.25rem 1.4rem;list-style:none;flex-wrap:wrap}
+nav a{color:var(--ink-soft);text-decoration:none;font-size:.97rem;padding:.25rem 0;border-bottom:2px solid transparent}
+nav a:hover{color:var(--ink);border-color:var(--blue)}
+
+/* Hero */
+.hero{padding:4.5rem 0 5rem;background:linear-gradient(180deg,#fff 0%,var(--paper) 100%)}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:3rem;align-items:center}
+.hero h1{font-size:clamp(2.4rem,6vw,4.1rem);margin-bottom:1.1rem}
+.hero p{color:var(--ink-soft);max-width:52ch;margin-bottom:2rem;font-size:1.15rem}
+.btns{display:flex;gap:.8rem;flex-wrap:wrap}
+.btn{display:inline-block;padding:.8rem 1.4rem;border-radius:8px;font-weight:600;text-decoration:none;border:2px solid var(--blue);transition:background .2s,color .2s}
+.btn.primary{background:var(--blue);color:#fff}
+.btn.primary:hover{background:var(--blue-dark);border-color:var(--blue-dark)}
+.btn.ghost{color:var(--blue);background:transparent}
+.btn.ghost:hover{background:var(--blue);color:#fff}
+
+/* Terminal: the one memorable element */
+.term{background:var(--night);color:#d7e0f5;border-radius:12px;box-shadow:0 24px 50px -22px rgba(14,23,48,.6);overflow:hidden;font-family:var(--mono);font-size:.92rem}
+.term-top{display:flex;gap:.45rem;align-items:center;padding:.7rem 1rem;background:#16224a}
+.term-top i{width:11px;height:11px;border-radius:50%;background:#5a6aa0;display:block}
+.term-top span{margin-left:.6rem;font-size:.8rem;color:#9fb0dd}
+.term-body{padding:1.2rem 1.2rem 1.4rem;overflow-x:auto}
+.term-body p{margin:0 0 .35rem;color:#d7e0f5;font-size:.92rem;max-width:none;white-space:pre}
+.term .p{color:#6ee0b4}.term .c{color:#8fa4e8}
+.cursor{display:inline-block;width:.55em;height:1.05em;background:#6ee0b4;vertical-align:-.15em;animation:blink 1.1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+
+/* About */
+.about{display:grid;grid-template-columns:1fr 1fr;gap:3rem}
+.facts{list-style:none;display:grid;gap:.9rem}
+.facts li{padding:.2rem 0 .9rem;border-bottom:1px solid var(--line)}
+.facts strong{display:block;font-family:var(--serif);font-size:1.05rem}
+.facts span{color:var(--ink-soft)}
+
+/* Skills */
+.skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1.2rem}
+.skill{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:1.5rem}
+.skill h3{font-size:1.2rem;margin-bottom:.8rem}
+.tags{display:flex;flex-wrap:wrap;gap:.45rem;list-style:none}
+.tags li{background:#eaf0ff;color:var(--blue-dark);padding:.25rem .7rem;border-radius:999px;font-size:.88rem;font-weight:500}
+
+/* my Projects  */
+.projects{display:grid;gap:1.4rem}
+.project{display:grid;grid-template-columns:.9fr 1.6fr;gap:2rem;background:var(--card);border:1px solid var(--line);border-left:5px solid var(--blue);border-radius:10px;padding:1.8rem}
+.project:nth-child(2){border-left-color:var(--mint)}
+.project h3{font-size:1.35rem;margin-bottom:.5rem}
+.meta{color:var(--ink-soft);font-size:.95rem}
+.project ul{padding-left:1.2rem;margin:.7rem 0 1rem;color:var(--ink-soft)}
+.project li{margin-bottom:.3rem}
+
+/* Timeline */
+.timeline{list-style:none;border-left:2px solid var(--line);padding-left:1.6rem;display:grid;gap:1.8rem;max-width:760px}
+.timeline li{position:relative}
+.timeline li::before{content:"";position:absolute;left:calc(-1.6rem - 7px);top:.5rem;width:12px;height:12px;border-radius:50%;background:var(--blue);border:3px solid var(--paper)}
+.timeline time{color:var(--ink-soft);font-size:.92rem}
+.timeline h3{font-size:1.2rem;margin:.1rem 0 .3rem}
+.timeline p{color:var(--ink-soft)}
+
+/* Contact */
+.contact{background:var(--night);color:#e8edfb}
+.contact h2{color:#fff}
+.contact .lede{color:#b5c1e3}
+.links{display:flex;flex-wrap:wrap;gap:.8rem}
+.contact .btn.ghost{color:#fff;border-color:#5a6aa0}
+.contact .btn.ghost:hover{background:#fff;color:var(--night);border-color:#fff}
+.contact .btn.primary{background:#fff;color:var(--night);border-color:#fff}
+.contact .btn.primary:hover{background:#dfe7ff;border-color:#dfe7ff}
+footer{background:var(--night);color:#8fa0cc;padding:1.5rem 0 2rem;font-size:.92rem;border-top:1px solid #1e2b57}
+
+/* Responsive */
+@media (max-width:860px){
+  section{padding:3.5rem 0}
+  .hero{padding:3rem 0 3.5rem}
+  .hero-grid,.about,.project{grid-template-columns:1fr}
+  .hero-grid{gap:2.2rem}
+  .about{gap:2rem}
+  .project{gap:1rem;padding:1.4rem}
+}
+@media (max-width:520px){
+  body{font-size:1rem}
+  .bar{justify-content:center}
+  nav ul{justify-content:center}
+  .btn{flex:1 1 100%;text-align:center}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .cursor{animation:none}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap bar">
+    <a class="brand" href="#top">MUTABAZI Philemon</a>
+    <nav aria-label="Main">
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#journey">Journey</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <h1>I build and run web systems on Linux.</h1>
+        <p>I’m a Year 4 Computer Science student who enjoys servers, networking and clean, fast websites. This page is served from my own Ubuntu virtual machine.</p>
+        <div class="btns">
+          <a class="btn primary" href="#projects">See my projects</a>
+          <a class="btn ghost" href="#contact">Get in touch</a>
+        </div>
+      </div>
+      <div class="term" role="img" aria-label="Terminal showing an SSH login and a running web server">
+        <div class="term-top"><i></i><i></i><i></i><span>ubuntu-server: ssh session</span></div>
+        <div class="term-body">
+          <p><span class="p">$</span> ssh student@192.168.1.45</p>
+          <p><span class="c">Welcome to Ubuntu Server</span></p>
+          <p><span class="p">$</span> systemctl is-active nginx</p>
+          <p>active</p>
+          <p><span class="p">$</span> ngrok http 80</p>
+          <p><span class="c">Forwarding</span> https://your-site.ngrok-free.app</p>
+          <p><span class="p">$</span> <span class="cursor"></span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="wrap about">
+      <div>
+        <h2>About me</h2>
+        <p class="lede" style="margin-bottom:1rem">I’m studying Computer Science and focus on how software meets infrastructure: how a request travels from a browser to a server and back.</p>
+        <p style="color:var(--ink-soft);max-width:62ch">Replace this paragraph with two or three sentences about your interests, what you’re learning now, and the kind of work you want to do after graduation.</p>
+      </div>
+      <ul class="facts">
+        <li><strong>Studying</strong><span>BSc Computer Science, Year 4</span></li>
+        <li><strong>Based in</strong><span>Kigali, Rwanda</span></li>
+        <li><strong>Currently learning</strong><span>Linux administration, networking, cloud basics</span></li>
+        <li><strong>Open to</strong><span>Internships, junior roles and collaboration</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="skills" style="background:#fff">
+    <div class="wrap">
+      <h2>Skills</h2>
+      <p class="lede">The tools I use most, grouped by what I use them for.</p>
+      <div class="skills">
+        <div class="skill">
+          <h3>Systems</h3>
+          <ul class="tags"><li>Ubuntu Server</li><li>Bash</li><li>SSH</li><li>VirtualBox</li><li>UFW firewall</li></ul>
+        </div>
+        <div class="skill">
+          <h3>Web</h3>
+          <ul class="tags"><li>HTML</li><li>CSS</li><li>JavaScript</li><li>Nginx</li><li>Apache</li></ul>
+        </div>
+        <div class="skill">
+          <h3>Networking</h3>
+          <ul class="tags"><li>TCP/IP</li><li>HTTP/HTTPS</li><li>Bridged and NAT</li><li>ngrok tunnels</li></ul>
+        </div>
+        <div class="skill">
+          <h3>Programming</h3>
+          <ul class="tags"><li>Python</li><li>Java</li><li>SQL</li><li>Git</li></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="wrap">
+      <h2>Projects</h2>
+      <p class="lede">Practical work, with what I built and what I learned.</p>
+      <div class="projects">
+        <article class="project">
+          <div>
+            <h3>Linux web server in a VM</h3>
+            <p class="meta">Year 4 practical assignment</p>
+          </div>
+          <div>
+            <p>A web server running on an Ubuntu Server virtual machine, managed over SSH from Windows and published to the internet.</p>
+            <ul>
+              <li>Configured bridged networking so the Windows host could reach the VM.</li>
+              <li>Installed Nginx and served a custom <code>index.html</code>.</li>
+              <li>Exposed the site over HTTPS with an authenticated ngrok tunnel.</li>
+            </ul>
+            <a class="btn ghost" href="#contact">Ask about this project</a>
+          </div>
+        </article>
+        <article class="project">
+          <div>
+            <h3>Your next project</h3>
+            <p class="meta">Add the year and your role</p>
+          </div>
+          <div>
+            <p>Describe the problem you solved in one sentence, then list what you built and the result.</p>
+            <ul>
+              <li>What you made and the tools you used.</li>
+              <li>A number or outcome that shows it worked.</li>
+              <li>What you would improve next time.</li>
+            </ul>
+            <a class="btn ghost" href="https://github.com/" rel="noopener">View code on GitHub</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="journey" style="background:#fff">
+    <div class="wrap">
+      <h2>Journey</h2>
+      <p class="lede">Education and experience so far.</p>
+      <ol class="timeline">
+        <li>
+          <time>2023 to present</time>
+          <h3>BSc Computer Science, Year 4</h3>
+          <p>Your university name. Courses in operating systems, networks and software engineering.</p>
+        </li>
+        <li>
+          <time>Add dates</time>
+          <h3>Internship or job title</h3>
+          <p>Company name. One line about what you did and what you achieved.</p>
+        </li>
+        <li>
+          <time>Add dates</time>
+          <h3>Certificate or award</h3>
+          <p>Issuer and a short note on what it covers.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="contact" class="contact">
+    <div class="wrap">
+      <h2>Let’s work together</h2>
+      <p class="lede">I reply to emails within two days. Send a message or find me on the links below.</p>
+      <div class="links">
+        <a class="btn primary" href="mailto:you@example.com">Email me</a>
+        <a class="btn ghost" href="https://github.com/" rel="noopener">GitHub</a>
+        <a class="btn ghost" href="https://www.linkedin.com/" rel="noopener">LinkedIn</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">© 2026 MUTABAZI Philemon. Served from an Ubuntu VM with Nginx.</div>
+</footer>
+
+</body>
+</html>
