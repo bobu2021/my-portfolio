@@ -18,7 +18,7 @@ html{scroll-behavior:smooth;scroll-padding-top:72px}
 body{font-family:var(--sans);color:var(--ink);background:var(--paper);line-height:1.65;font-size:1.0625rem;-webkit-font-smoothing:antialiased}
 img,svg{max-width:100%}
 a{color:var(--blue)}
-a:focus-visible,button:focus-visible{outline:3px solid var(--blue);outline-offset:3px;border-radius:4px}
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--blue);outline-offset:3px;border-radius:4px}
 .wrap{width:min(1080px,100% - 2.5rem);margin-inline:auto}
 section{padding:5rem 0}
 h1,h2,h3{font-family:var(--serif);line-height:1.15;letter-spacing:-.01em}
@@ -27,23 +27,42 @@ h2{font-size:clamp(1.8rem,4vw,2.5rem);margin-bottom:.6rem}
 
 /* Header */
 header{position:sticky;top:0;z-index:10;background:rgba(246,247,251,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
-.bar{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;padding:.8rem 0}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;padding:.8rem 0;position:relative}
 .brand{font-family:var(--serif);font-weight:700;font-size:1.2rem;color:var(--ink);text-decoration:none}
 nav ul{display:flex;gap:.25rem 1.4rem;list-style:none;flex-wrap:wrap}
-nav a{color:var(--ink-soft);text-decoration:none;font-size:.97rem;padding:.25rem 0;border-bottom:2px solid transparent}
-nav a:hover{color:var(--ink);border-color:var(--blue)}
+nav a{color:var(--ink-soft);text-decoration:none;font-size:.97rem;padding:.25rem 0;border-bottom:2px solid transparent;transition:color .2s,border-color .2s}
+nav a:hover,nav a.active{color:var(--ink);border-color:var(--blue)}
+.menu-btn{display:none;background:none;border:1px solid var(--line);border-radius:8px;padding:.55rem .6rem;cursor:pointer}
+.menu-btn span{display:block;width:22px;height:2px;background:var(--ink);margin:4px 0;border-radius:2px;transition:transform .25s,opacity .25s}
+.menu-btn[aria-expanded="true"] span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+.menu-btn[aria-expanded="true"] span:nth-child(2){opacity:0}
+.menu-btn[aria-expanded="true"] span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
 
 /* Hero */
 .hero{padding:4.5rem 0 5rem;background:linear-gradient(180deg,#fff 0%,var(--paper) 100%)}
 .hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:3rem;align-items:center}
-.hero h1{font-size:clamp(2.4rem,6vw,4.1rem);margin-bottom:1.1rem}
+.hero-id{display:flex;align-items:center;gap:1rem;margin-bottom:1.4rem}
+.avatar{position:relative;display:grid;place-items:center;width:74px;height:74px;flex:none;border-radius:50%;background:linear-gradient(135deg,var(--blue) 0%,#7b3fe4 55%,var(--mint) 100%);color:#fff;font-family:var(--serif);font-weight:700;font-size:1.6rem;letter-spacing:.02em;box-shadow:0 10px 26px -10px rgba(47,91,234,.55)}
+.avatar::after{content:"";position:absolute;inset:-5px;border-radius:50%;border:2px solid rgba(47,91,234,.35);animation:pulse 2.6s ease-out infinite}
+@keyframes pulse{0%{transform:scale(.92);opacity:.9}70%{transform:scale(1.12);opacity:0}100%{opacity:0}}
+.badge{display:inline-flex;align-items:center;gap:.5rem;background:#e7f7f0;color:#0f7a58;border:1px solid #bfe8d8;padding:.35rem .85rem;border-radius:999px;font-size:.88rem;font-weight:600}
+.badge i{width:8px;height:8px;border-radius:50%;background:var(--mint);display:block;animation:blink 1.6s ease-in-out infinite}
+.hero h1{font-size:clamp(2.2rem,6vw,4.1rem);margin-bottom:1.1rem}
+.hero h1 em{font-style:normal;color:var(--blue)}
 .hero p{color:var(--ink-soft);max-width:52ch;margin-bottom:2rem;font-size:1.15rem}
 .btns{display:flex;gap:.8rem;flex-wrap:wrap}
-.btn{display:inline-block;padding:.8rem 1.4rem;border-radius:8px;font-weight:600;text-decoration:none;border:2px solid var(--blue);transition:background .2s,color .2s}
+.btn{display:inline-block;padding:.8rem 1.4rem;border-radius:8px;font-weight:600;text-decoration:none;border:2px solid var(--blue);transition:background .2s,color .2s;cursor:pointer;font-family:inherit;font-size:1rem}
 .btn.primary{background:var(--blue);color:#fff}
 .btn.primary:hover{background:var(--blue-dark);border-color:var(--blue-dark)}
 .btn.ghost{color:var(--blue);background:transparent}
 .btn.ghost:hover{background:var(--blue);color:#fff}
+
+/* Stats counters */
+.stats{padding:0 0 1rem}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:1.8rem 1.5rem;box-shadow:0 18px 40px -30px rgba(20,33,61,.35)}
+.stat{text-align:center;padding:.4rem .5rem}
+.stat .num{display:block;font-family:var(--serif);font-weight:700;font-size:clamp(1.9rem,4vw,2.6rem);color:var(--blue);line-height:1.1}
+.stat .label{color:var(--ink-soft);font-size:.95rem}
 
 /* Terminal: the one memorable element */
 .term{background:var(--night);color:#d7e0f5;border-radius:12px;box-shadow:0 24px 50px -22px rgba(14,23,48,.6);overflow:hidden;font-family:var(--mono);font-size:.92rem}
@@ -65,24 +84,28 @@ nav a:hover{color:var(--ink);border-color:var(--blue)}
 
 /* Skills */
 .skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1.2rem}
-.skill{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:1.5rem}
+.skill{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:1.5rem;transition:transform .25s,box-shadow .25s}
+.skill:hover{transform:translateY(-4px);box-shadow:0 18px 34px -22px rgba(20,33,61,.4)}
 .skill h3{font-size:1.2rem;margin-bottom:.8rem}
 .tags{display:flex;flex-wrap:wrap;gap:.45rem;list-style:none}
 .tags li{background:#eaf0ff;color:var(--blue-dark);padding:.25rem .7rem;border-radius:999px;font-size:.88rem;font-weight:500}
 
 /* my Projects  */
 .projects{display:grid;gap:1.4rem}
-.project{display:grid;grid-template-columns:.9fr 1.6fr;gap:2rem;background:var(--card);border:1px solid var(--line);border-left:5px solid var(--blue);border-radius:10px;padding:1.8rem}
+.project{display:grid;grid-template-columns:.9fr 1.6fr;gap:2rem;background:var(--card);border:1px solid var(--line);border-left:5px solid var(--blue);border-radius:10px;padding:1.8rem;transition:transform .25s,box-shadow .25s}
+.project:hover{transform:translateY(-3px);box-shadow:0 18px 34px -22px rgba(20,33,61,.35)}
 .project:nth-child(2){border-left-color:var(--mint)}
 .project h3{font-size:1.35rem;margin-bottom:.5rem}
 .meta{color:var(--ink-soft);font-size:.95rem}
 .project ul{padding-left:1.2rem;margin:.7rem 0 1rem;color:var(--ink-soft)}
 .project li{margin-bottom:.3rem}
+code{background:#eef1f8;border:1px solid var(--line);border-radius:5px;padding:.05rem .35rem;font-size:.9em}
 
 /* Timeline */
 .timeline{list-style:none;border-left:2px solid var(--line);padding-left:1.6rem;display:grid;gap:1.8rem;max-width:760px}
 .timeline li{position:relative}
 .timeline li::before{content:"";position:absolute;left:calc(-1.6rem - 7px);top:.5rem;width:12px;height:12px;border-radius:50%;background:var(--blue);border:3px solid var(--paper)}
+#journey .timeline li::before{border-color:#fff}
 .timeline time{color:var(--ink-soft);font-size:.92rem}
 .timeline h3{font-size:1.2rem;margin:.1rem 0 .3rem}
 .timeline p{color:var(--ink-soft)}
@@ -91,31 +114,59 @@ nav a:hover{color:var(--ink);border-color:var(--blue)}
 .contact{background:var(--night);color:#e8edfb}
 .contact h2{color:#fff}
 .contact .lede{color:#b5c1e3}
-.links{display:flex;flex-wrap:wrap;gap:.8rem}
+.contact-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:3rem;align-items:start}
+.links{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:1.6rem}
 .contact .btn.ghost{color:#fff;border-color:#5a6aa0}
 .contact .btn.ghost:hover{background:#fff;color:var(--night);border-color:#fff}
 .contact .btn.primary{background:#fff;color:var(--night);border-color:#fff}
 .contact .btn.primary:hover{background:#dfe7ff;border-color:#dfe7ff}
+.cform{display:grid;gap:.9rem;background:#132046;border:1px solid #22315f;border-radius:12px;padding:1.6rem}
+.cform label{font-size:.9rem;font-weight:600;color:#c3cfec;display:block;margin-bottom:.3rem}
+.cform input,.cform textarea{width:100%;background:#0c1531;border:1px solid #2c3d70;border-radius:8px;color:#eef2ff;padding:.7rem .85rem;font:inherit;font-size:.98rem}
+.cform input::placeholder,.cform textarea::placeholder{color:#6d7ca8}
+.cform textarea{min-height:120px;resize:vertical}
+.cform .note{font-size:.85rem;color:#8fa0cc;margin:0}
+.form-status{font-size:.92rem;color:#6ee0b4;min-height:1.2em;margin:0}
+
+/* Footer */
 footer{background:var(--night);color:#8fa0cc;padding:1.5rem 0 2rem;font-size:.92rem;border-top:1px solid #1e2b57}
+
+/* Scroll reveal */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .6s ease,transform .6s ease}
+.reveal.shown{opacity:1;transform:none}
 
 /* Responsive */
 @media (max-width:860px){
   section{padding:3.5rem 0}
   .hero{padding:3rem 0 3.5rem}
-  .hero-grid,.about,.project{grid-template-columns:1fr}
+  .hero-grid,.about,.project,.contact-grid{grid-template-columns:1fr}
   .hero-grid{gap:2.2rem}
   .about{gap:2rem}
   .project{gap:1rem;padding:1.4rem}
+  .stats-grid{grid-template-columns:repeat(2,1fr);gap:1.4rem .8rem}
+  .menu-btn{display:block}
+  nav{display:none;position:absolute;top:100%;left:0;right:0;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 20px 40px -24px rgba(20,33,61,.45);padding:.6rem}
+  nav.open{display:block}
+  nav ul{flex-direction:column;gap:0}
+  nav a{display:block;padding:.7rem .8rem;border-bottom:none;border-left:3px solid transparent;border-radius:6px}
+  nav a:hover,nav a.active{border-left-color:var(--blue);background:#f2f5ff}
 }
 @media (max-width:520px){
   body{font-size:1rem}
-  .bar{justify-content:center}
-  nav ul{justify-content:center}
+  .bar{justify-content:space-between}
   .btn{flex:1 1 100%;text-align:center}
+  .hero-id{flex-direction:column;align-items:flex-start;gap:.9rem}
+  .stats-grid{padding:1.4rem 1rem}
+  .term-body{padding:1rem}
+  .term-body p{font-size:.8rem}
+  .cform{padding:1.2rem}
 }
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
-  .cursor{animation:none}
+  .cursor,.avatar::after,.badge i{animation:none}
+  .reveal{opacity:1;transform:none;transition:none}
+  .skill,.project{transition:none}
+  .skill:hover,.project:hover{transform:none}
 }
 </style>
 </head>
@@ -124,7 +175,10 @@ footer{background:var(--night);color:#8fa0cc;padding:1.5rem 0 2rem;font-size:.92
 <header>
   <div class="wrap bar">
     <a class="brand" href="#top">MUTABAZI Philemon</a>
-    <nav aria-label="Main">
+    <button class="menu-btn" aria-expanded="false" aria-controls="main-nav" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+    <nav id="main-nav" aria-label="Main">
       <ul>
         <li><a href="#about">About</a></li>
         <li><a href="#skills">Skills</a></li>
@@ -141,7 +195,11 @@ footer{background:var(--night);color:#8fa0cc;padding:1.5rem 0 2rem;font-size:.92
   <section class="hero">
     <div class="wrap hero-grid">
       <div>
-        <h1>Hello I build and run web systems on Linux.</h1>
+        <div class="hero-id">
+          <span class="avatar" aria-hidden="true">MP</span>
+          <span class="badge"><i aria-hidden="true"></i> Open to internships &amp; collaboration</span>
+        </div>
+        <h1>Hello, my name is <em>MUTABAZI Philemon</em>. I build and run web systems on Linux.</h1>
         <p>I’m a Year 4 Computer Science student who enjoys servers, networking and clean, fast websites. This page is served from my own Ubuntu virtual machine.</p>
         <div class="btns">
           <a class="btn primary" href="#projects">See my projects</a>
@@ -163,14 +221,25 @@ footer{background:var(--night);color:#8fa0cc;padding:1.5rem 0 2rem;font-size:.92
     </div>
   </section>
 
+  <section class="stats" aria-label="Quick numbers">
+    <div class="wrap">
+      <div class="stats-grid reveal">
+        <div class="stat"><span class="num" data-target="10">0</span><span class="label">Projects built</span></div>
+        <div class="stat"><span class="num" data-target="15">0</span><span class="label">Technologies in my toolkit</span></div>
+        <div class="stat"><span class="num" data-target="24">0</span><span class="label">Course modules completed</span></div>
+        <div class="stat"><span class="num" data-target="2">0</span><span class="label">Virtual servers running</span></div>
+      </div>
+    </div>
+  </section>
+
   <section id="about">
     <div class="wrap about">
-      <div>
+      <div class="reveal">
         <h2>About me</h2>
         <p class="lede" style="margin-bottom:1rem">I’m studying Computer Science and focus on how software meets infrastructure: how a request travels from a browser to a server and back.</p>
-        <p style="color:var(--ink-soft);max-width:62ch">Replace this paragraph with two or three sentences about your interests, what you’re learning now, and the kind of work you want to do after graduation.</p>
+        <p style="color:var(--ink-soft);max-width:62ch">I spend most of my time administering Linux servers, writing JavaScript and Python, and documenting what I learn so other students can follow along. Right now I’m deepening my skills in networking and cloud basics, and I’m looking for an internship or junior role where I can keep learning while contributing real work.</p>
       </div>
-      <ul class="facts">
+      <ul class="facts reveal">
         <li><strong>Studying</strong><span>BSc Computer Science, Year 4</span></li>
         <li><strong>Based in</strong><span>Kigali, Rwanda</span></li>
         <li><strong>Currently learning</strong><span>Linux administration, networking, cloud basics</span></li>
@@ -181,22 +250,22 @@ footer{background:var(--night);color:#8fa0cc;padding:1.5rem 0 2rem;font-size:.92
 
   <section id="skills" style="background:#fff">
     <div class="wrap">
-      <h2>Skills</h2>
-      <p class="lede">The tools I use most, grouped by what I use them for.</p>
+      <h2 class="reveal">Skills</h2>
+      <p class="lede reveal">The tools I use most, grouped by what I use them for.</p>
       <div class="skills">
-        <div class="skill">
+        <div class="skill reveal">
           <h3>Systems</h3>
           <ul class="tags"><li>Ubuntu Server</li><li>Bash</li><li>SSH</li><li>VirtualBox</li><li>UFW firewall</li></ul>
         </div>
-        <div class="skill">
+        <div class="skill reveal">
           <h3>Web</h3>
           <ul class="tags"><li>HTML</li><li>CSS</li><li>JavaScript</li><li>Nginx</li><li>Apache</li></ul>
         </div>
-        <div class="skill">
+        <div class="skill reveal">
           <h3>Networking</h3>
           <ul class="tags"><li>TCP/IP</li><li>HTTP/HTTPS</li><li>Bridged and NAT</li><li>ngrok tunnels</li></ul>
         </div>
-        <div class="skill">
+        <div class="skill reveal">
           <h3>Programming</h3>
           <ul class="tags"><li>Python</li><li>Java</li><li>SQL</li><li>Git</li></ul>
         </div>
@@ -206,10 +275,10 @@ footer{background:var(--night);color:#8fa0cc;padding:1.5rem 0 2rem;font-size:.92
 
   <section id="projects">
     <div class="wrap">
-      <h2>Projects</h2>
-      <p class="lede">Practical work, with what I built and what I learned.</p>
+      <h2 class="reveal">Projects</h2>
+      <p class="lede reveal">Practical work, with what I built and what I learned.</p>
       <div class="projects">
-        <article class="project">
+        <article class="project reveal">
           <div>
             <h3>Linux web server in a VM</h3>
             <p class="meta">Year 4 practical assignment</p>
@@ -224,19 +293,19 @@ footer{background:var(--night);color:#8fa0cc;padding:1.5rem 0 2rem;font-size:.92
             <a class="btn ghost" href="#contact">Ask about this project</a>
           </div>
         </article>
-        <article class="project">
+        <article class="project reveal">
           <div>
-            <h3>Your next project</h3>
-            <p class="meta">Add the year and your role</p>
+            <h3>This portfolio site</h3>
+            <p class="meta">Hand-built, self-hosted</p>
           </div>
           <div>
-            <p>Describe the problem you solved in one sentence, then list what you built and the result.</p>
+            <p>The very page you are reading: written by hand in HTML, CSS and JavaScript, without frameworks, and served by Nginx from my own VM.</p>
             <ul>
-              <li>What you made and the tools you used.</li>
-              <li>A number or outcome that shows it worked.</li>
-              <li>What you would improve next time.</li>
+              <li>Responsive layout that works from phones to wide screens.</li>
+              <li>Small, fast and dependency-free, so it loads quickly on slow connections.</li>
+              <li>Deployed and updated over SSH, practising real server administration.</li>
             </ul>
-            <a class="btn ghost" href="https://github.com/" rel="noopener">View code on GitHub</a>
+            <a class="btn ghost" href="#contact">Ask about this project</a>
           </div>
         </article>
       </div>
@@ -245,20 +314,20 @@ footer{background:var(--night);color:#8fa0cc;padding:1.5rem 0 2rem;font-size:.92
 
   <section id="journey" style="background:#fff">
     <div class="wrap">
-      <h2>Journey</h2>
-      <p class="lede">Education and experience so far.</p>
+      <h2 class="reveal">Journey</h2>
+      <p class="lede reveal">Education and experience so far.</p>
       <ol class="timeline">
-        <li>
+        <li class="reveal">
           <time>2023 to present</time>
           <h3>BSc Computer Science, Year 4</h3>
           <p>Your university name. Courses in operating systems, networks and software engineering.</p>
         </li>
-        <li>
+        <li class="reveal">
           <time>Add dates</time>
           <h3>Internship or job title</h3>
           <p>Company name. One line about what you did and what you achieved.</p>
         </li>
-        <li>
+        <li class="reveal">
           <time>Add dates</time>
           <h3>Certificate or award</h3>
           <p>Issuer and a short note on what it covers.</p>
@@ -269,12 +338,33 @@ footer{background:var(--night);color:#8fa0cc;padding:1.5rem 0 2rem;font-size:.92
 
   <section id="contact" class="contact">
     <div class="wrap">
-      <h2>Let’s work together</h2>
-      <p class="lede">I reply to emails within two days. Send a message or find me on the links below.</p>
-      <div class="links">
-        <a class="btn primary" href="mailto:you@example.com">Email me</a>
-        <a class="btn ghost" href="https://github.com/" rel="noopener">GitHub</a>
-        <a class="btn ghost" href="https://www.linkedin.com/" rel="noopener">LinkedIn</a>
+      <div class="contact-grid">
+        <div class="reveal">
+          <h2>Let’s work together</h2>
+          <p class="lede">I reply to emails within two days. Send a message with the form, or find me on the links below.</p>
+          <div class="links">
+            <a class="btn primary" href="mailto:you@example.com">Email me</a>
+            <a class="btn ghost" href="https://github.com/" rel="noopener">GitHub</a>
+            <a class="btn ghost" href="https://www.linkedin.com/" rel="noopener">LinkedIn</a>
+          </div>
+        </div>
+        <form class="cform reveal" id="contact-form" novalidate>
+          <div>
+            <label for="cf-name">Your name</label>
+            <input id="cf-name" name="name" type="text" placeholder="Jane Doe" required autocomplete="name">
+          </div>
+          <div>
+            <label for="cf-email">Your email</label>
+            <input id="cf-email" name="email" type="email" placeholder="jane@example.com" required autocomplete="email">
+          </div>
+          <div>
+            <label for="cf-msg">Message</label>
+            <textarea id="cf-msg" name="message" placeholder="Tell me about the role, project or question…" required></textarea>
+          </div>
+          <button class="btn primary" type="submit">Send message</button>
+          <p class="form-status" id="form-status" role="status"></p>
+          <p class="note">This form opens your email app with the message ready to send — no data is stored on this site.</p>
+        </form>
       </div>
     </div>
   </section>
@@ -284,6 +374,113 @@ footer{background:var(--night);color:#8fa0cc;padding:1.5rem 0 2rem;font-size:.92
 <footer>
   <div class="wrap">© 2026 MUTABAZI Philemon. Served from an Ubuntu VM with Nginx.</div>
 </footer>
+
+<script>
+(function(){
+  "use strict";
+  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* Mobile menu */
+  var menuBtn = document.querySelector(".menu-btn");
+  var nav = document.getElementById("main-nav");
+  menuBtn.addEventListener("click", function(){
+    var open = nav.classList.toggle("open");
+    menuBtn.setAttribute("aria-expanded", String(open));
+  });
+  nav.addEventListener("click", function(e){
+    if (e.target.closest("a")){
+      nav.classList.remove("open");
+      menuBtn.setAttribute("aria-expanded","false");
+    }
+  });
+
+  /* Scroll reveal */
+  var reveals = document.querySelectorAll(".reveal");
+  if (reduced || !("IntersectionObserver" in window)){
+    reveals.forEach(function(el){ el.classList.add("shown"); });
+  } else {
+    var revealObs = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting){
+          entry.target.classList.add("shown");
+          revealObs.unobserve(entry.target);
+        }
+      });
+    }, {threshold:.15});
+    reveals.forEach(function(el){ revealObs.observe(el); });
+  }
+
+  /* Stat counters */
+  function runCounter(el){
+    var target = parseInt(el.dataset.target, 10) || 0;
+    if (reduced){ el.textContent = target; return; }
+    var duration = 1400, start = null;
+    function step(ts){
+      if (!start) start = ts;
+      var progress = Math.min((ts - start) / duration, 1);
+      var eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.round(target * eased);
+      if (progress < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  var nums = document.querySelectorAll(".stat .num");
+  if (!("IntersectionObserver" in window)){
+    nums.forEach(runCounter);
+  } else {
+    var countObs = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting){
+          runCounter(entry.target);
+          countObs.unobserve(entry.target);
+        }
+      });
+    }, {threshold:.6});
+    nums.forEach(function(el){ countObs.observe(el); });
+  }
+
+  /* Scrollspy: highlight the section in view */
+  var navLinks = Array.prototype.slice.call(nav.querySelectorAll('a[href^="#"]'));
+  var sections = navLinks.map(function(a){ return document.querySelector(a.getAttribute("href")); }).filter(Boolean);
+  if ("IntersectionObserver" in window && sections.length){
+    var spyObs = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting){
+          navLinks.forEach(function(a){
+            a.classList.toggle("active", a.getAttribute("href") === "#" + entry.target.id);
+          });
+        }
+      });
+    }, {rootMargin:"-45% 0px -50% 0px"});
+    sections.forEach(function(s){ spyObs.observe(s); });
+  }
+
+  /* Contact form: compose an email in the visitor's mail app */
+  var form = document.getElementById("contact-form");
+  var status = document.getElementById("form-status");
+  form.addEventListener("submit", function(e){
+    e.preventDefault();
+    var name = form.elements["name"].value.trim();
+    var email = form.elements["email"].value.trim();
+    var msg = form.elements["message"].value.trim();
+    if (!name || !email || !msg){
+      status.style.color = "#ffb3b3";
+      status.textContent = "Please fill in your name, email and message.";
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+      status.style.color = "#ffb3b3";
+      status.textContent = "That email address doesn’t look right.";
+      return;
+    }
+    status.style.color = "#6ee0b4";
+    status.textContent = "Opening your email app…";
+    var subject = encodeURIComponent("Portfolio message from " + name);
+    var body = encodeURIComponent(msg + "\n\n— " + name + " (" + email + ")");
+    window.location.href = "mailto:you@example.com?subject=" + subject + "&body=" + body;
+  });
+})();
+</script>
 
 </body>
 </html>
